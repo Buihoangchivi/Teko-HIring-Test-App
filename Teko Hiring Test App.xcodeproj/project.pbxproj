@@ -14,6 +14,8 @@
 		36D862BF26BE7E8500ECAB2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36D862BD26BE7E8500ECAB2B /* LaunchScreen.storyboard */; };
 		36D862D026BE879000ECAB2B /* ErrorProducts_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862CF26BE879000ECAB2B /* ErrorProducts_ViewController.swift */; };
 		36D862D326BE8DB400ECAB2B /* ErrorProducts_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862D226BE8DB400ECAB2B /* ErrorProducts_TableViewCell.swift */; };
+		36D862D626BEC7F000ECAB2B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862D526BEC7F000ECAB2B /* Utilities.swift */; };
+		36D862D826BEC82400ECAB2B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862D726BEC82400ECAB2B /* Constant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		36D862C026BE7E8500ECAB2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36D862CF26BE879000ECAB2B /* ErrorProducts_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorProducts_ViewController.swift; sourceTree = "<group>"; };
 		36D862D226BE8DB400ECAB2B /* ErrorProducts_TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorProducts_TableViewCell.swift; sourceTree = "<group>"; };
+		36D862D526BEC7F000ECAB2B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		36D862D726BEC82400ECAB2B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,7 @@
 		36D862B126BE7E8300ECAB2B /* Teko Hiring Test App */ = {
 			isa = PBXGroup;
 			children = (
+				36D862C026BE7E8500ECAB2B /* Info.plist */,
 				36D862C726BE821400ECAB2B /* Controller */,
 				36D862C626BE81FA00ECAB2B /* View */,
 			);
@@ -67,7 +72,7 @@
 		36D862C626BE81FA00ECAB2B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				36D862BD26BE7E8500ECAB2B /* LaunchScreen.storyboard */,
+				36D862C926BE826200ECAB2B /* Storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -75,12 +80,11 @@
 		36D862C726BE821400ECAB2B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				36D862D426BEC60F00ECAB2B /* Handle */,
 				36D862D126BE8D4F00ECAB2B /* Table View Cell */,
 				36D862CC26BE864C00ECAB2B /* View Controller */,
-				36D862C926BE826200ECAB2B /* Storyboard */,
 				36D862C826BE824B00ECAB2B /* Delegate */,
 				36D862BB26BE7E8500ECAB2B /* Assets.xcassets */,
-				36D862C026BE7E8500ECAB2B /* Info.plist */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -98,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				36D862B826BE7E8300ECAB2B /* Main.storyboard */,
+				36D862BD26BE7E8500ECAB2B /* LaunchScreen.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -116,6 +121,15 @@
 				36D862D226BE8DB400ECAB2B /* ErrorProducts_TableViewCell.swift */,
 			);
 			path = "Table View Cell";
+			sourceTree = "<group>";
+		};
+		36D862D426BEC60F00ECAB2B /* Handle */ = {
+			isa = PBXGroup;
+			children = (
+				36D862D526BEC7F000ECAB2B /* Utilities.swift */,
+				36D862D726BEC82400ECAB2B /* Constant.swift */,
+			);
+			path = Handle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,7 +206,9 @@
 				36D862D326BE8DB400ECAB2B /* ErrorProducts_TableViewCell.swift in Sources */,
 				36D862D026BE879000ECAB2B /* ErrorProducts_ViewController.swift in Sources */,
 				36D862B326BE7E8300ECAB2B /* AppDelegate.swift in Sources */,
+				36D862D626BEC7F000ECAB2B /* Utilities.swift in Sources */,
 				36D862B526BE7E8300ECAB2B /* SceneDelegate.swift in Sources */,
+				36D862D826BEC82400ECAB2B /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

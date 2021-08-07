@@ -12,10 +12,10 @@ class ErrorProductsTableViewCell: UITableViewCell {
     
     //IBOutlet
     @IBOutlet weak var ProductImageView: UIImageView!
-    @IBOutlet weak var NameTextField: UITextField!
-    @IBOutlet weak var ErrorTextField: UITextField!
-    @IBOutlet weak var SKUTextField: UITextField!
-    @IBOutlet weak var ColorTextField: UITextField!
+    @IBOutlet weak var NameLabel: UILabel!
+    @IBOutlet weak var ErrorLabel: UILabel!
+    @IBOutlet weak var SKULabel: UILabel!
+    @IBOutlet weak var ColorLabel: UILabel!
     @IBOutlet weak var EditButton: UIButton!
     
     override func awakeFromNib() {
