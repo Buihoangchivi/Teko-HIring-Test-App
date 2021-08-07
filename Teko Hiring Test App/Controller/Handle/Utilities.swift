@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct ProductInfomation: Codable {
+struct ProductInfomation {
+    
     var id = 0
     var errorDescription = ""
     var name = ""
@@ -16,8 +17,14 @@ struct ProductInfomation: Codable {
     var image = ""
     var color = 0
     
+}
+
+struct ColorInfomation {
+    
+    var id = 0
+    var name = ""
     
 }
 
 var ErrorProductList = [ProductInfomation]()
-var ColorList = [String]()
+var ColorList = [ColorInfomation]()

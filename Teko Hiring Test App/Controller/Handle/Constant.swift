@@ -19,3 +19,9 @@ struct TableViewCell {
     static var ErrorProduct_TableViewCell = "ErrorProductTableViewCell"
     
 }
+
+//Duong dan API danh sach san pham loi
+let ErrorProducts_URLString = "https://hiring-test.stag.tekoapis.net/api/products"
+
+//Duong dan API danh sach mau
+let Color_URLString = "https://hiring-test.stag.tekoapis.net/api/colors"

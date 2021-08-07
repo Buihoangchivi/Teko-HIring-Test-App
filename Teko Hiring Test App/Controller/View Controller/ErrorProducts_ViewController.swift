@@ -75,7 +75,71 @@ class ErrorProductsViewController: UIViewController {
     
     func DataInit() {
         
-        let URLString = "https://hiring-test.stag.tekoapis.net/api/products"
+        //Doc du lieu danh sach san pham loi tu API cho truoc
+        ReadProductData()
+        
+        //Doc du lieu danh sach mau tu API cho truoc
+        ReadColorData()
+        
+    }
+    
+    func ReadProductData() {
+        
+        ReadDataFromURL(URLString: ErrorProducts_URLString) { (dict) in
+            
+            //Doc cac san pham loi
+            for product in dict! {
+                
+                var color = 0
+                if let colorNumber = product["color"] as? Int {
+                    color = colorNumber
+                }
+                var info = ProductInfomation()
+                info.name = "\(product["name"]!)"
+                info.id = product["id"] as! Int
+                info.errorDescription = "\(product["errorDescription"]!)"
+                info.name = "\(product["name"]!)"
+                info.sku = "\(product["sku"]!)"
+                info.image = "\(product["image"]!)"
+                info.color = color
+                ErrorProductList.append(info)
+                
+            }
+            
+            //Reload lai bang
+            DispatchQueue.main.async {
+                self.ErrorProductsTableView.reloadData()
+            }
+            
+        }
+        
+    }
+    
+    func ReadColorData() {
+        
+        ReadDataFromURL(URLString: Color_URLString) { (dict) in
+            
+            //Doc cac mau
+            for product in dict! {
+                
+                var info = ColorInfomation()
+                info.id = product["id"] as! Int
+                info.name = "\(product["name"]!)"
+                ColorList.append(info)
+                
+            }
+            
+            //Reload lai bang
+            DispatchQueue.main.async {
+                self.ErrorProductsTableView.reloadData()
+            }
+            
+        }
+        
+    }
+    
+    func ReadDataFromURL(URLString: String, completion: @escaping ([[String:Any]]?) -> ()) {
+        
         guard let requestUrl = URL(string:URLString) else { return }
         var request = URLRequest(url:requestUrl)
         request.httpMethod = "GET"
@@ -84,29 +148,11 @@ class ErrorProductsViewController: UIViewController {
             if error == nil, let usableData = data {
                 
                 let data = try? JSONSerialization.jsonObject(with: usableData, options:[])
-                //Array of product dictionary
+                //Dictionary cua danh sach doc duoc tu API
                 let dict = data as? [[String:Any]]
                 
-                for product in dict! {
-                    
-                    var color = -1
-                    if let colorNumber = product["color"] as? Int {
-                        color = colorNumber
-                    }
-                    var info = ProductInfomation()
-                    info.name = "\(product["name"]!)"
-                    info.id = product["id"] as! Int
-                    info.errorDescription = "\(product["errorDescription"]!)"
-                    info.name = "\(product["name"]!)"
-                    info.sku = "\(product["sku"]!)"
-                    info.image = "\(product["image"]!)"
-                    info.color = color
-                    ErrorProductList.append(info)
-                    
-                }
-                DispatchQueue.main.async {
-                    self.ErrorProductsTableView.reloadData()
-                }
+                //Tra ve ket qua
+                completion(dict)
                 
             }
         }
@@ -141,7 +187,17 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
         cell.NameLabel.text = ErrorProductList[indexPath.row].name
         cell.ErrorLabel.text = ErrorProductList[indexPath.row].errorDescription
         cell.SKULabel.text = ErrorProductList[indexPath.row].sku
-        cell.ColorLabel.text = String(ErrorProductList[indexPath.row].color)
+        let colorID = ErrorProductList[indexPath.row].color
+        if (colorID - 1 >= 0 && colorID - 1 < ColorList.count) {
+            
+            cell.ColorLabel.text = ColorList[colorID - 1].name
+            
+        }
+        else {
+            
+            cell.ColorLabel.text = "No color data"
+            
+        }
 
         return cell
         
