@@ -25,6 +25,8 @@ class EditProductInfo_ViewController: UIViewController {
     
     var info = ProductInfomation()
     
+    var delegate: EditProductInfoDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,6 +41,10 @@ class EditProductInfo_ViewController: UIViewController {
     
     @IBAction func act_Save(_ sender: Any) {
         
+        info.name = NameTextField.text!
+        info.sku = SKUTextField.text!
+        info.color = ColorPickerView.selectedRow(inComponent: 0)
+        delegate?.UpdateInfo(info: info)
         self.dismiss(animated: true, completion: nil)
         
     }

@@ -16,6 +16,8 @@
 		36D862D626BEC7F000ECAB2B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862D526BEC7F000ECAB2B /* Utilities.swift */; };
 		36D862D826BEC82400ECAB2B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862D726BEC82400ECAB2B /* Constant.swift */; };
 		36D862DA26BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862D926BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift */; };
+		36D862DC26BF970400ECAB2B /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862DB26BF970400ECAB2B /* Delegate.swift */; };
+		36D862DE26BFA12700ECAB2B /* UpdatedProductsPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862DD26BFA12700ECAB2B /* UpdatedProductsPopUpViewController.swift */; };
 		F9DED54A6FFC990A5BCC668B /* Pods_Teko_Hiring_Test_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F07FBA0153737645222F9CF /* Pods_Teko_Hiring_Test_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +35,8 @@
 		36D862D526BEC7F000ECAB2B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		36D862D726BEC82400ECAB2B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		36D862D926BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProductInfo_ViewController.swift; sourceTree = "<group>"; };
+		36D862DB26BF970400ECAB2B /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
+		36D862DD26BFA12700ECAB2B /* UpdatedProductsPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedProductsPopUpViewController.swift; sourceTree = "<group>"; };
 		4F07FBA0153737645222F9CF /* Pods_Teko_Hiring_Test_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Teko_Hiring_Test_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -109,6 +113,7 @@
 			children = (
 				36D862B226BE7E8300ECAB2B /* AppDelegate.swift */,
 				36D862B426BE7E8300ECAB2B /* SceneDelegate.swift */,
+				36D862DB26BF970400ECAB2B /* Delegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -126,6 +131,7 @@
 			children = (
 				36D862CF26BE879000ECAB2B /* ErrorProducts_ViewController.swift */,
 				36D862D926BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift */,
+				36D862DD26BFA12700ECAB2B /* UpdatedProductsPopUpViewController.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -274,7 +280,9 @@
 				36D862D026BE879000ECAB2B /* ErrorProducts_ViewController.swift in Sources */,
 				36D862B326BE7E8300ECAB2B /* AppDelegate.swift in Sources */,
 				36D862DA26BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift in Sources */,
+				36D862DC26BF970400ECAB2B /* Delegate.swift in Sources */,
 				36D862D626BEC7F000ECAB2B /* Utilities.swift in Sources */,
+				36D862DE26BFA12700ECAB2B /* UpdatedProductsPopUpViewController.swift in Sources */,
 				36D862B526BE7E8300ECAB2B /* SceneDelegate.swift in Sources */,
 				36D862D826BEC82400ECAB2B /* Constant.swift in Sources */,
 			);

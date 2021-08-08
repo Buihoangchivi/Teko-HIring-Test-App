@@ -26,6 +26,9 @@ class ErrorProductsViewController: UIViewController {
     var CurrentPage = 1
     var TotalPage = 0
     
+    //Index cua san pham duoc chon de chinh sua
+    var SelectedProductIndex = 0
+    
     override func viewWillAppear(_ animated: Bool) {
         TableViewLeftConstraint.constant += view.bounds.width
     }
@@ -104,7 +107,17 @@ class ErrorProductsViewController: UIViewController {
         ErrorProductsTableView.reloadData()
         
     }
-
+    
+    @IBAction func act_SubmitData(_ sender: Any) {
+        
+        let dest = self.storyboard?.instantiateViewController(identifier: Storyboard.UpdatedProductInfo_StoryboardID) as! UpdatedProductsPopUpViewController
+        dest.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        dest.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        
+        self.present(dest, animated: true, completion: nil)
+        
+    }
+    
     func Init() {
         
         //Khoi tao giao dien
@@ -386,6 +399,7 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let index = (CurrentPage - 1)  * MaxProductNumberPerPage + indexPath.row
+        SelectedProductIndex = index
         
         ErrorProductsTableView.deselectRow(at: indexPath, animated: true)
         let dest = self.storyboard?.instantiateViewController(identifier: Storyboard.EditProductInfo_StoryboardID) as! EditProductInfo_ViewController
@@ -394,8 +408,21 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
         
         //Nap du lieu qua man hinh chinh sua thong tin
         dest.info = ErrorProductList[index]
+        dest.delegate = self
         
         self.present(dest, animated: true, completion: nil)
     
     }
+}
+
+//Delegate
+extension ErrorProductsViewController: EditProductInfoDelegate{
+    
+    func UpdateInfo(info: ProductInfomation) {
+        
+        ErrorProductList[SelectedProductIndex] = info
+        ErrorProductsTableView.reloadData()
+        
+    }
+    
 }

@@ -12,6 +12,7 @@ struct Storyboard {
 
     static var ErrorProducts_StoryboardID = "ErrorProductsViewController"
     static var EditProductInfo_StoryboardID = "EditProductInfoViewController"
+    static var UpdatedProductInfo_StoryboardID = "UpdatedProductsPopUpViewController"
 
 }
 
