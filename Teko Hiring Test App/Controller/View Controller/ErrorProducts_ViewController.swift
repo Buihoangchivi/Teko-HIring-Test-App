@@ -20,29 +20,89 @@ class ErrorProductsViewController: UIViewController {
     @IBOutlet weak var NextPageButton: UIButton!
     @IBOutlet weak var LastPageButton: UIButton!
     @IBOutlet weak var SubmitButton: UIButton!
+    @IBOutlet weak var TableViewLeftConstraint: NSLayoutConstraint!
     
     //Tong so trang va trang dang hien thi
     var CurrentPage = 1
     var TotalPage = 0
     
     override func viewWillAppear(_ animated: Bool) {
-        /*ShadowViewLeftConstraint.constant += view.bounds.width
-        ShadowViewRightConstraint.constant -= view.bounds.width*/
+        TableViewLeftConstraint.constant += view.bounds.width
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        /*ShadowViewLeftConstraint.constant -= view.bounds.width
-        ShadowViewRightConstraint.constant += view.bounds.width
-        UIView.animate(withDuration: 0.7,
+        TableViewLeftConstraint.constant -= view.bounds.width
+        UIView.animate(withDuration: 0.9,
                        delay: 1,
                      animations: { [weak self] in
                       self?.view.layoutIfNeeded()
-        }, completion: nil)*/
+        }, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         Init()
+    }
+    
+    @IBAction func act_ClickPageButton(_ sender: Any) {
+        
+        let button = (sender as! UIButton).restorationIdentifier!
+        var temp = view.bounds.width
+        //temp < 0 thi animation tu phai sang trai
+        //temp > 0 thi animation tu trai sang phai
+        if (button == "PrevPage" || button == "FirstPage") {
+            temp *= -1
+        }
+        
+        //Neu nhan nut Next hoac Last Page
+        if (temp > 0) {
+            if (button == "NextPage") {
+                CurrentPage += 1 //Tang so trang len 1
+            }
+            else {
+                CurrentPage = TotalPage //Trang cuoi cung
+            }
+            
+            //Neu dang o trang cuoi cung thi vo hieu hoa 2 nut Next va Last Page
+            if (CurrentPage == TotalPage) {
+                ChangButtonState(NextPageButton, false)
+                ChangButtonState(LastPageButton, false)
+            }
+            //Active 2 nut Prev va First Page
+            if (PrevPageButton.isEnabled == false) {
+                ChangButtonState(PrevPageButton, true)
+                ChangButtonState(FirstPageButton, true)
+            }
+        }
+        else { //Neu nhan nut Prev hoac First Page
+            if (button == "PrevPage") {
+                self.CurrentPage -= 1 //Giam so trang xuong 1
+            }
+            else {
+                self.CurrentPage = 1 //Trang dau tien
+            }
+            
+            //Neu dang o trang dau tien thi vo hieu hoa 2 nut Prev va First Page
+            if (CurrentPage == 1) {
+                ChangButtonState(PrevPageButton, false)
+                ChangButtonState(FirstPageButton, false)
+            }
+            //Active 2 nut Next va Last Page
+            if (NextPageButton.isEnabled == false) {
+                ChangButtonState(NextPageButton, true)
+                ChangButtonState(LastPageButton, true)
+            }
+        }
+        
+        //Cap nhat so trang tren giao dien
+        CurrentPageLabel.text = "\(CurrentPage) / \(TotalPage)"
+        
+        //Scroll len tren
+        ErrorProductsTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        
+        //Reload lai bang
+        ErrorProductsTableView.reloadData()
+        
     }
 
     func Init() {
@@ -281,10 +341,12 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
         
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.ErrorProduct_TableViewCell) as! ErrorProductsTableViewCell
         
-        cell.NameLabel.text = ErrorProductList[indexPath.row].name
-        cell.ErrorLabel.text = ErrorProductList[indexPath.row].errorDescription
-        cell.SKULabel.text = ErrorProductList[indexPath.row].sku
-        let colorID = ErrorProductList[indexPath.row].color
+        let index = (CurrentPage - 1)  * MaxProductNumberPerPage + indexPath.row
+        
+        cell.NameLabel.text = ErrorProductList[index].name
+        cell.ErrorLabel.text = ErrorProductList[index].errorDescription
+        cell.SKULabel.text = ErrorProductList[index].sku
+        let colorID = ErrorProductList[index].color
         if (colorID - 1 >= 0 && colorID - 1 < ColorList.count) {
             
             cell.ColorLabel.text = ColorList[colorID - 1].name
@@ -296,7 +358,7 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
             
         }
         
-        let imagePath = ErrorProductList[indexPath.row].image
+        let imagePath = ErrorProductList[index].image
         if (imagePath != "") {
             
             let url = URL(string: imagePath)!
