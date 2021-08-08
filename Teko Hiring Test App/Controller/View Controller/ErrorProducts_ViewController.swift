@@ -185,10 +185,16 @@ class ErrorProductsViewController: UIViewController {
         
         ReadDataFromURL(URLString: Color_URLString) { (dict) in
             
+            var info = ColorInfomation()
+            
+            //Khoi tao doi voi truong hop san pham khong co du lieu mau
+            info.id = 0
+            info.name = "No color data"
+            ColorList.append(info)
+            
             //Doc cac mau
             for product in dict! {
                 
-                var info = ColorInfomation()
                 info.id = product["id"] as! Int
                 info.name = "\(product["name"]!)"
                 ColorList.append(info)
@@ -347,14 +353,9 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
         cell.ErrorLabel.text = ErrorProductList[index].errorDescription
         cell.SKULabel.text = ErrorProductList[index].sku
         let colorID = ErrorProductList[index].color
-        if (colorID - 1 >= 0 && colorID - 1 < ColorList.count) {
+        if (colorID >= 0 && colorID < ColorList.count) {
             
-            cell.ColorLabel.text = ColorList[colorID - 1].name
-            
-        }
-        else {
-            
-            cell.ColorLabel.text = "No color data"
+            cell.ColorLabel.text = ColorList[colorID].name
             
         }
         
@@ -384,7 +385,17 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        let index = (CurrentPage - 1)  * MaxProductNumberPerPage + indexPath.row
+        
         ErrorProductsTableView.deselectRow(at: indexPath, animated: true)
+        let dest = self.storyboard?.instantiateViewController(identifier: Storyboard.EditProductInfo_StoryboardID) as! EditProductInfo_ViewController
+        dest.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        dest.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        
+        //Nap du lieu qua man hinh chinh sua thong tin
+        dest.info = ErrorProductList[index]
+        
+        self.present(dest, animated: true, completion: nil)
     
     }
 }
