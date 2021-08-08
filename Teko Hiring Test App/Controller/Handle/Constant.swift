@@ -25,3 +25,6 @@ let ErrorProducts_URLString = "https://hiring-test.stag.tekoapis.net/api/product
 
 //Duong dan API danh sach mau
 let Color_URLString = "https://hiring-test.stag.tekoapis.net/api/colors"
+
+//So san pham nhieu nhat hien thi trong mot trang
+let MaxProductNumberPerPage = 10

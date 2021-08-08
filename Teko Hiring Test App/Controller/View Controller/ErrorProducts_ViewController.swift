@@ -23,7 +23,7 @@ class ErrorProductsViewController: UIViewController {
     
     //Tong so trang va trang dang hien thi
     var CurrentPage = 1
-    var TotalPage = 1
+    var TotalPage = 0
     
     override func viewWillAppear(_ animated: Bool) {
         /*ShadowViewLeftConstraint.constant += view.bounds.width
@@ -107,9 +107,14 @@ class ErrorProductsViewController: UIViewController {
                 
             }
             
-            //Reload lai bang
             DispatchQueue.main.async {
+                
+                //Phan trang
+                self.UpdatePageNumber()
+                
+                //Reload lai bang
                 self.ErrorProductsTableView.reloadData()
+                
             }
             
         }
@@ -161,28 +166,95 @@ class ErrorProductsViewController: UIViewController {
         
     }
     
-    func getData(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+    func UpdatePageNumber() {
         
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-        
-    }
-    
-    func downloadImage(imageView:UIImageView, url: URL) {
-        
-        getData(url: url) { data, response, error in
+        if (ErrorProductList.count == 0) {
             
-            guard let data = data, error == nil else { return }
+            TotalPage = 0
+            CurrentPage = 0
             
-            //Doc anh vao khung anh trong table cell
-            DispatchQueue.main.async() {
+        }
+        else {
+            
+            TotalPage = (ErrorProductList.count - 1) / MaxProductNumberPerPage + 1
+            if (CurrentPage > TotalPage || CurrentPage == 0) {
                 
-                imageView.image = UIImage(data: data)
-                self.ErrorProductsTableView.reloadData()
+                CurrentPage = 1
+                
+            }
+        }
+        
+        //Cap nhat trang thai cua cac nut phan trang
+        if (TotalPage < 2) { //Truong hop nhieu nhat 1 trang nen khong di chuyen trang duoc
+            
+            if (NextPageButton.isEnabled == true) {
+                ChangButtonState(NextPageButton, false)
+                ChangButtonState(LastPageButton, false)
+            }
+            
+            if (PrevPageButton.isEnabled == true) {
+                ChangButtonState(PrevPageButton, false)
+                ChangButtonState(FirstPageButton, false)
+            }
+            
+        }
+        else { //Truong hop it nhat 2 trang
+            
+            if (CurrentPage == 1) { //O trang dau tien
+                
+                //Co the tien toi trang sau
+                ChangButtonState(NextPageButton, true)
+                ChangButtonState(LastPageButton, true)
+                
+                //Khong the quay ve trang truoc
+                ChangButtonState(PrevPageButton, false)
+                ChangButtonState(FirstPageButton, false)
+                
+            }
+            else if (CurrentPage == TotalPage) { //O trang cuoi cung
+                
+                //Khong the tien toi trang sau
+                ChangButtonState(NextPageButton, false)
+                ChangButtonState(LastPageButton, false)
+                
+                //Co the quay ve trang truoc
+                ChangButtonState(PrevPageButton, true)
+                ChangButtonState(FirstPageButton, true)
+                
+            }
+            else { //O cac trang giua
+                
+                //Co the quay ve trang truoc
+                ChangButtonState(NextPageButton, true)
+                ChangButtonState(LastPageButton, true)
+                
+                //Co the tien toi trang sau
+                ChangButtonState(PrevPageButton, true)
+                ChangButtonState(FirstPageButton, true)
                 
             }
             
         }
         
+        //Hien thi trang hien tai tren tong so trang
+        CurrentPageLabel.text = "\(CurrentPage) / \(TotalPage)"
+        
+    }
+    
+    //Thay doi trang thai cua cac nut phan trang
+    func ChangButtonState(_ button: UIButton, _ isActive: Bool) {
+        button.isEnabled = isActive
+        if (isActive == true) {
+            button.layer.borderWidth = 0
+            button.tintColor  = UIColor.white
+            button.backgroundColor = UIColor.systemGreen
+        }
+        else {
+            button.layer.borderWidth = 1
+            button.layer.borderColor = UIColor.lightGray.cgColor
+            button.tintColor = UIColor.black
+            button.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+        }
     }
     
 }
@@ -193,14 +265,14 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         //Mac dinh moi trang 10 hang
-        var productNumberPerPage = ErrorProductList.count
+        var productNumberPerPage = MaxProductNumberPerPage
         
         //Xu ly truong hop so hang nho hon 10
-        /*if (CurrentPage * 10 > ErrorProductList.count) {
+        if (CurrentPage * MaxProductNumberPerPage > ErrorProductList.count) {
             
-            productNumberPerPage = CurrentPage * 10 - ErrorProductList.count
+            productNumberPerPage = MaxProductNumberPerPage - (CurrentPage * MaxProductNumberPerPage - ErrorProductList.count)
             
-        }*/
+        }
         return productNumberPerPage
         
     }
@@ -228,13 +300,14 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
         if (imagePath != "") {
             
             let url = URL(string: imagePath)!
-            //downloadImage(imageView: cell.ProductImageView, url: url)
-            //cell.ProductImageView.sd_setImage(with: url, completed: nil)
             let webPCoder = SDImageWebPCoder.shared
             SDImageCodersManager.shared.addCoder(webPCoder)
             DispatchQueue.main.async {
+                
                 cell.ProductImageView.sd_setImage(with: url)
+                
             }
+            
         }
 
         return cell
@@ -249,5 +322,7 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        ErrorProductsTableView.deselectRow(at: indexPath, animated: true)
+    
     }
 }
