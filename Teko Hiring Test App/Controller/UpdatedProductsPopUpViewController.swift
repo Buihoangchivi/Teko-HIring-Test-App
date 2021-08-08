@@ -9,13 +9,21 @@
 import UIKit
 import SDWebImageWebPCoder
 
+//
+// MARK: - Updated Products Popup View Controller
+//
 class UpdatedProductsPopUpViewController: UIViewController {
 
-    //IBOutlet
+    //
+    // MARK: - Outlets
+    //
     @IBOutlet weak var OKButton: UIButton!
     @IBOutlet weak var ErrorProductsTableView: UITableView!
     @IBOutlet weak var PopUpView: UIView!
     
+    //
+    // MARK: - View Controller
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,6 +61,9 @@ class UpdatedProductsPopUpViewController: UIViewController {
 
 }
 
+//
+// MARK: - Table View Data Source and Table View Delegate
+//
 extension UpdatedProductsPopUpViewController:UITableViewDelegate,UITableViewDataSource{
     //Tra ve so hang cua bang trong 1 trang
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

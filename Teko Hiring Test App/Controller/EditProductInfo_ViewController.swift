@@ -9,9 +9,14 @@
 import UIKit
 import SDWebImageWebPCoder
 
+//
+// MARK: - Edit Products Infomation View Controller
+//
 class EditProductInfo_ViewController: UIViewController {
     
-    //IBOutlet
+    //
+    // MARK: - Outlets
+    //
     @IBOutlet weak var IDLabel: UILabel!
     @IBOutlet weak var ErrorLabel: UILabel!
     @IBOutlet weak var NameTextField: UITextField!
@@ -23,10 +28,15 @@ class EditProductInfo_ViewController: UIViewController {
     
     @IBOutlet weak var ColorPickerView: UIPickerView!
     
-    var info = ProductInfomation()
-    
+    //
+    // MARK: - Variables And Properties
+    //
+    var info = ProductInfomation()    
     var delegate: EditProductInfoDelegate?
     
+    //
+    // MARK: - View Controller
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -102,6 +112,9 @@ class EditProductInfo_ViewController: UIViewController {
     
 }
 
+//
+// MARK: - Picker View Data Source and Picker View Delegate
+//
 extension EditProductInfo_ViewController : UIPickerViewDataSource, UIPickerViewDelegate {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

@@ -29,6 +29,7 @@ struct ColorInfomation {
 
 var ErrorProductList = [ProductInfomation]()
 var ColorList = [ColorInfomation]()
+var ValidArray = [Bool]()
 
 //Kiem tra ten san pham co hop le hay khong
 func CheckValidation_NameProduct(nameLabel: UILabel, errorLabel: UILabel) -> Bool {

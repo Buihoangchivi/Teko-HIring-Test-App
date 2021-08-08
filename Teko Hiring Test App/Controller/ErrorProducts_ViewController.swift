@@ -9,9 +9,14 @@
 import UIKit
 import SDWebImageWebPCoder
 
+//
+// MARK: - Error Products View Controller
+//
 class ErrorProductsViewController: UIViewController {
     
-    //IBOutlet
+    //
+    // MARK: - Outlets
+    //
     @IBOutlet weak var ErrorProductsTableView: UITableView!
     @IBOutlet weak var FirstPageButton: UIButton!
     @IBOutlet weak var PrevPageButton: UIButton!
@@ -22,15 +27,19 @@ class ErrorProductsViewController: UIViewController {
     @IBOutlet weak var SubmitButton: UIButton!
     @IBOutlet weak var TableViewLeftConstraint: NSLayoutConstraint!
     
+    //
+    // MARK: - Variables And Properties
+    //
     //Tong so trang va trang dang hien thi
     var CurrentPage = 1
     var TotalPage = 0
     
-    var ValidArray = [Bool]()
-    
     //Index cua san pham duoc chon de chinh sua
     var SelectedProductIndex = 0
     
+    //
+    // MARK: - View Controller
+    //
     override func viewWillAppear(_ animated: Bool) {
         TableViewLeftConstraint.constant += view.bounds.width
     }
@@ -143,7 +152,22 @@ class ErrorProductsViewController: UIViewController {
         UIInit()
         
         //Khoi tao du lieu
-        DataInit()
+        Data.loadData { () in
+            
+            self.CurrentPage = 1
+            self.TotalPage = 0
+                
+            DispatchQueue.main.async {
+                
+                //Phan trang
+                self.UpdatePageNumber()
+                
+                //Reload lai bang
+                self.ErrorProductsTableView.reloadData()
+                
+            }
+            
+        }
         
     }
     
@@ -163,7 +187,7 @@ class ErrorProductsViewController: UIViewController {
         
     }
     
-    func DataInit() {
+    /*func DataInit() {
         
         //Doc du lieu danh sach san pham loi tu API cho truoc
         ReadProductData()
@@ -260,7 +284,7 @@ class ErrorProductsViewController: UIViewController {
         }
         task.resume()
         
-    }
+    }*/
     
     func UpdatePageNumber() {
         
@@ -355,8 +379,11 @@ class ErrorProductsViewController: UIViewController {
     
 }
 
-//Xu ly bang cac san pham loi
+//
+// MARK: - Table View Data Source and Table View Delegate
+//
 extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
+    
     //Tra ve so hang cua bang trong 1 trang
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -377,35 +404,39 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
         
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.ErrorProduct_TableViewCell) as! ErrorProductsTableViewCell
         
-        let index = (CurrentPage - 1)  * MaxProductNumberPerPage + indexPath.row
+        let index = (CurrentPage - 1) * MaxProductNumberPerPage + indexPath.row
         
-        cell.NameLabel.text = ErrorProductList[index].name
-        cell.ErrorLabel.text = ErrorProductList[index].errorDescription
-        cell.SKULabel.text = ErrorProductList[index].sku
-        let colorID = ErrorProductList[index].color
-        if (colorID >= 0 && colorID < ColorList.count) {
+        if (index >= 0 && index < ErrorProductList.count) {
             
-            cell.ColorLabel.text = ColorList[colorID].name
-            
-        }
-        
-        let imagePath = ErrorProductList[index].image
-        if (imagePath != "") {
-            
-            let url = URL(string: imagePath)!
-            let webPCoder = SDImageWebPCoder.shared
-            SDImageCodersManager.shared.addCoder(webPCoder)
-            DispatchQueue.main.async {
+            cell.NameLabel.text = ErrorProductList[index].name
+            cell.ErrorLabel.text = ErrorProductList[index].errorDescription
+            cell.SKULabel.text = ErrorProductList[index].sku
+            let colorID = ErrorProductList[index].color
+            if (colorID >= 0 && colorID < ColorList.count) {
                 
-                cell.ProductImageView.sd_setImage(with: url)
+                cell.ColorLabel.text = ColorList[colorID].name
                 
             }
             
+            let imagePath = ErrorProductList[index].image
+            if (imagePath != "") {
+                
+                let url = URL(string: imagePath)!
+                let webPCoder = SDImageWebPCoder.shared
+                SDImageCodersManager.shared.addCoder(webPCoder)
+                DispatchQueue.main.async {
+                    
+                    cell.ProductImageView.sd_setImage(with: url)
+                    
+                }
+                
+            }
+            
+            //Kiem tra hop le
+            ValidArray[index] = CheckValidation_NameProduct(nameLabel: cell.NameLabel, errorLabel: cell.NameErrorLabel) &&
+            CheckValidation_SKU(nameLabel: cell.SKULabel, errorLabel: cell.SKUErrorLabel)
+            
         }
-        
-        //Kiem tra hop le
-        ValidArray[index] = CheckValidation_NameProduct(nameLabel: cell.NameLabel, errorLabel: cell.NameErrorLabel) &&
-        CheckValidation_SKU(nameLabel: cell.SKULabel, errorLabel: cell.SKUErrorLabel)
         
         return cell
         
@@ -437,7 +468,9 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
     }
 }
 
-//Delegate
+//
+// MARK: - Edit Product Infomation Delegate
+//
 extension ErrorProductsViewController: EditProductInfoDelegate{
     
     func UpdateInfo(info: ProductInfomation) {

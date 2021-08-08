@@ -8,9 +8,14 @@
 
 import UIKit
 
+//
+// MARK: - Error Products Cell
+//
 class ErrorProductsTableViewCell: UITableViewCell {
     
-    //IBOutlet
+    //
+    // MARK: - Outlets
+    //
     @IBOutlet weak var ProductImageView: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var ErrorLabel: UILabel!
@@ -20,6 +25,9 @@ class ErrorProductsTableViewCell: UITableViewCell {
     @IBOutlet weak var NameErrorLabel: UILabel!
     @IBOutlet weak var SKUErrorLabel: UILabel!
     
+    //
+    // MARK: - Table View Cell
+    //
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
