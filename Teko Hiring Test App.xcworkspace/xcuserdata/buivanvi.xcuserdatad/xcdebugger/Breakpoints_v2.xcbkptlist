@@ -46,8 +46,8 @@
             filePath = "Teko Hiring Test App/Controller/ErrorProducts_ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
             landmarkName = "UpdatePageNumber()"
             landmarkType = "7">
          </BreakpointContent>

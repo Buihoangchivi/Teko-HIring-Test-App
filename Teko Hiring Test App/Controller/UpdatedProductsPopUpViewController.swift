@@ -78,6 +78,7 @@ extension UpdatedProductsPopUpViewController:UITableViewDelegate,UITableViewData
         
         let index = indexPath.row
         
+        //Nap du lieu vao man hinh chinh sua
         cell.NameLabel.text = ErrorProductList[index].name
         cell.ErrorLabel.text = ErrorProductList[index].errorDescription
         cell.SKULabel.text = ErrorProductList[index].sku
