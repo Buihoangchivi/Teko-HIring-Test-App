@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImageWebPCoder
 
 class ErrorProductsViewController: UIViewController {
     
@@ -160,6 +161,30 @@ class ErrorProductsViewController: UIViewController {
         
     }
     
+    func getData(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+        
+    }
+    
+    func downloadImage(imageView:UIImageView, url: URL) {
+        
+        getData(url: url) { data, response, error in
+            
+            guard let data = data, error == nil else { return }
+            
+            //Doc anh vao khung anh trong table cell
+            DispatchQueue.main.async() {
+                
+                imageView.image = UIImage(data: data)
+                self.ErrorProductsTableView.reloadData()
+                
+            }
+            
+        }
+        
+    }
+    
 }
 
 //Xu ly bang cac san pham loi
@@ -197,6 +222,19 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
             
             cell.ColorLabel.text = "No color data"
             
+        }
+        
+        let imagePath = ErrorProductList[indexPath.row].image
+        if (imagePath != "") {
+            
+            let url = URL(string: imagePath)!
+            //downloadImage(imageView: cell.ProductImageView, url: url)
+            //cell.ProductImageView.sd_setImage(with: url, completed: nil)
+            let webPCoder = SDImageWebPCoder.shared
+            SDImageCodersManager.shared.addCoder(webPCoder)
+            DispatchQueue.main.async {
+                cell.ProductImageView.sd_setImage(with: url)
+            }
         }
 
         return cell
