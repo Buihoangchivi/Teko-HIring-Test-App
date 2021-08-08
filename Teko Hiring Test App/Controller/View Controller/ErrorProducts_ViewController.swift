@@ -26,6 +26,8 @@ class ErrorProductsViewController: UIViewController {
     var CurrentPage = 1
     var TotalPage = 0
     
+    var ValidArray = [Bool]()
+    
     //Index cua san pham duoc chon de chinh sua
     var SelectedProductIndex = 0
     
@@ -43,8 +45,10 @@ class ErrorProductsViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         Init()
+        
     }
     
     @IBAction func act_ClickPageButton(_ sender: Any) {
@@ -110,6 +114,21 @@ class ErrorProductsViewController: UIViewController {
     
     @IBAction func act_SubmitData(_ sender: Any) {
         
+        for element in ValidArray {
+            
+            if (element == false) {
+                
+                //Thong bao khong hop le
+                let alertWrongNumber = UIAlertController(title: "Invalid Product Infomation", message: "Product Name is required, max length 50 characters and SKU is required, max length 20 characters.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .destructive, handler: nil)
+                alertWrongNumber.addAction(okAction)
+                self.present(alertWrongNumber, animated: true, completion: nil)
+                return
+                
+            }
+            
+        }
+        
         let dest = self.storyboard?.instantiateViewController(identifier: Storyboard.UpdatedProductInfo_StoryboardID) as! UpdatedProductsPopUpViewController
         dest.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         dest.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
@@ -141,9 +160,6 @@ class ErrorProductsViewController: UIViewController {
         LastPageButton.layer.cornerRadius = LastPageButton.frame.height / 2
         //Bo tron goc cho nut gui du lieu
         SubmitButton.layer.cornerRadius = SubmitButton.frame.height / 2
-        
-        //An dau ngan cach giua cac TableViewCell
-        ErrorProductsTableView.separatorStyle = .none
         
     }
     
@@ -177,6 +193,7 @@ class ErrorProductsViewController: UIViewController {
                 info.image = "\(product["image"]!)"
                 info.color = color
                 ErrorProductList.append(info)
+                self.ValidArray.append(true)
                 
             }
             
@@ -385,15 +402,20 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
             }
             
         }
-
+        
+        //Kiem tra hop le
+        ValidArray[index] = CheckValidation_NameProduct(nameLabel: cell.NameLabel, errorLabel: cell.NameErrorLabel) &&
+        CheckValidation_SKU(nameLabel: cell.SKULabel, errorLabel: cell.SKUErrorLabel)
+        
         return cell
         
     }
     
     //Chi dinh do cao cho 1 o
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //return UITableView.automaticDimension
-        return 170
+        
+        return UITableView.automaticDimension
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

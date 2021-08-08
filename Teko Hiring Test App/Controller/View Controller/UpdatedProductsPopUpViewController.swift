@@ -41,9 +41,6 @@ class UpdatedProductsPopUpViewController: UIViewController {
         OKButton.layer.cornerRadius = OKButton.frame.height / 2
         PopUpView.layer.cornerRadius = 10
         
-        //An dau ngan cach giua cac TableViewCell
-        ErrorProductsTableView.separatorStyle = .none
-        
         //Lam mo nen cua view
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -100,8 +97,9 @@ extension UpdatedProductsPopUpViewController:UITableViewDelegate,UITableViewData
     
     //Chi dinh do cao cho 1 o
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //return UITableView.automaticDimension
-        return 170
+        
+        return UITableView.automaticDimension
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

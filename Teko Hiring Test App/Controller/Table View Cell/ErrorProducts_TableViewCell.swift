@@ -17,6 +17,8 @@ class ErrorProductsTableViewCell: UITableViewCell {
     @IBOutlet weak var SKULabel: UILabel!
     @IBOutlet weak var ColorLabel: UILabel!
     @IBOutlet weak var EditButton: UIButton!
+    @IBOutlet weak var NameErrorLabel: UILabel!
+    @IBOutlet weak var SKUErrorLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
