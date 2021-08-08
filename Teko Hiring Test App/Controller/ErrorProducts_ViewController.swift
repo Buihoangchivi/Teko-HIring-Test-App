@@ -9,9 +9,14 @@
 import UIKit
 import SDWebImageWebPCoder
 
+//
+// MARK: - Error Products View Controller
+//
 class ErrorProductsViewController: UIViewController {
     
-    //IBOutlet
+    //
+    // MARK: - Outlets
+    //
     @IBOutlet weak var ErrorProductsTableView: UITableView!
     @IBOutlet weak var FirstPageButton: UIButton!
     @IBOutlet weak var PrevPageButton: UIButton!
@@ -22,10 +27,19 @@ class ErrorProductsViewController: UIViewController {
     @IBOutlet weak var SubmitButton: UIButton!
     @IBOutlet weak var TableViewLeftConstraint: NSLayoutConstraint!
     
+    //
+    // MARK: - Variables And Properties
+    //
     //Tong so trang va trang dang hien thi
     var CurrentPage = 1
     var TotalPage = 0
     
+    //Index cua san pham duoc chon de chinh sua
+    var SelectedProductIndex = 0
+    
+    //
+    // MARK: - View Controller
+    //
     override func viewWillAppear(_ animated: Bool) {
         TableViewLeftConstraint.constant += view.bounds.width
     }
@@ -40,8 +54,10 @@ class ErrorProductsViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         Init()
+        
     }
     
     @IBAction func act_ClickPageButton(_ sender: Any) {
@@ -104,69 +120,44 @@ class ErrorProductsViewController: UIViewController {
         ErrorProductsTableView.reloadData()
         
     }
-
+    
+    @IBAction func act_SubmitData(_ sender: Any) {
+        
+        for element in ValidArray {
+            
+            if (element == false) { //Ton tai 1 san pham khong hop le
+                
+                //Thong bao khong hop le
+                let alertWrongNumber = UIAlertController(title: "Invalid Product Infomation", message: "Product Name is required, max length 50 characters and SKU is required, max length 20 characters.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .destructive, handler: nil)
+                alertWrongNumber.addAction(okAction)
+                self.present(alertWrongNumber, animated: true, completion: nil)
+                return
+                
+            }
+            
+        }
+        
+        //Tat ca san pham deu hop le thi hien thi Popup
+        let dest = self.storyboard?.instantiateViewController(identifier: Storyboard.UpdatedProductInfo_StoryboardID) as! UpdatedProductsPopUpViewController
+        dest.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        dest.modalTransitionStyle = UIModalTransitionStyle.crossDissolve
+        
+        self.present(dest, animated: true, completion: nil)
+        
+    }
+    
     func Init() {
         
         //Khoi tao giao dien
         UIInit()
         
         //Khoi tao du lieu
-        DataInit()
-        
-    }
-    
-    func UIInit() {
-        
-        //Bo goc cho nut thay doi so trang hien tai
-        ChangeCurrentPageButton.layer.borderWidth = 0.2
-        ChangeCurrentPageButton.layer.cornerRadius = 10
-        
-        //Bo tron goc cho cac nut phan trang
-        FirstPageButton.layer.cornerRadius = FirstPageButton.frame.height / 2
-        PrevPageButton.layer.cornerRadius = PrevPageButton.frame.height / 2
-        NextPageButton.layer.cornerRadius = NextPageButton.frame.height / 2
-        LastPageButton.layer.cornerRadius = LastPageButton.frame.height / 2
-        //Bo tron goc cho nut gui du lieu
-        SubmitButton.layer.cornerRadius = SubmitButton.frame.height / 2
-        
-        //An dau ngan cach giua cac TableViewCell
-        ErrorProductsTableView.separatorStyle = .none
-        
-    }
-    
-    func DataInit() {
-        
-        //Doc du lieu danh sach san pham loi tu API cho truoc
-        ReadProductData()
-        
-        //Doc du lieu danh sach mau tu API cho truoc
-        ReadColorData()
-        
-    }
-    
-    func ReadProductData() {
-        
-        ReadDataFromURL(URLString: ErrorProducts_URLString) { (dict) in
+        Data.loadData { () in
             
-            //Doc cac san pham loi
-            for product in dict! {
+            self.CurrentPage = 1
+            self.TotalPage = 0
                 
-                var color = 0
-                if let colorNumber = product["color"] as? Int {
-                    color = colorNumber
-                }
-                var info = ProductInfomation()
-                info.name = "\(product["name"]!)"
-                info.id = product["id"] as! Int
-                info.errorDescription = "\(product["errorDescription"]!)"
-                info.name = "\(product["name"]!)"
-                info.sku = "\(product["sku"]!)"
-                info.image = "\(product["image"]!)"
-                info.color = color
-                ErrorProductList.append(info)
-                
-            }
-            
             DispatchQueue.main.async {
                 
                 //Phan trang
@@ -181,57 +172,24 @@ class ErrorProductsViewController: UIViewController {
         
     }
     
-    func ReadColorData() {
+    //Ham khoi tao giao dien
+    func UIInit() {
         
-        ReadDataFromURL(URLString: Color_URLString) { (dict) in
-            
-            var info = ColorInfomation()
-            
-            //Khoi tao doi voi truong hop san pham khong co du lieu mau
-            info.id = 0
-            info.name = "No color data"
-            ColorList.append(info)
-            
-            //Doc cac mau
-            for product in dict! {
-                
-                info.id = product["id"] as! Int
-                info.name = "\(product["name"]!)"
-                ColorList.append(info)
-                
-            }
-            
-            //Reload lai bang
-            DispatchQueue.main.async {
-                self.ErrorProductsTableView.reloadData()
-            }
-            
-        }
+        //Bo goc cho nut thay doi so trang hien tai
+        ChangeCurrentPageButton.layer.borderWidth = 0.2
+        ChangeCurrentPageButton.layer.cornerRadius = 10
+        
+        //Bo tron goc cho cac nut phan trang
+        FirstPageButton.layer.cornerRadius = FirstPageButton.frame.height / 2
+        PrevPageButton.layer.cornerRadius = PrevPageButton.frame.height / 2
+        NextPageButton.layer.cornerRadius = NextPageButton.frame.height / 2
+        LastPageButton.layer.cornerRadius = LastPageButton.frame.height / 2
+        //Bo tron goc cho nut gui du lieu
+        SubmitButton.layer.cornerRadius = SubmitButton.frame.height / 2
         
     }
     
-    func ReadDataFromURL(URLString: String, completion: @escaping ([[String:Any]]?) -> ()) {
-        
-        guard let requestUrl = URL(string:URLString) else { return }
-        var request = URLRequest(url:requestUrl)
-        request.httpMethod = "GET"
-        let task = URLSession.shared.dataTask(with: request) {
-            (data, response, error) in
-            if error == nil, let usableData = data {
-                
-                let data = try? JSONSerialization.jsonObject(with: usableData, options:[])
-                //Dictionary cua danh sach doc duoc tu API
-                let dict = data as? [[String:Any]]
-                
-                //Tra ve ket qua
-                completion(dict)
-                
-            }
-        }
-        task.resume()
-        
-    }
-    
+    //Ham cap nhat so trang hien tai
     func UpdatePageNumber() {
         
         if (ErrorProductList.count == 0) {
@@ -325,8 +283,11 @@ class ErrorProductsViewController: UIViewController {
     
 }
 
-//Xu ly bang cac san pham loi
+//
+// MARK: - Table View Data Source and Table View Delegate
+//
 extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
+    
     //Tra ve so hang cua bang trong 1 trang
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -347,45 +308,55 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
         
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.ErrorProduct_TableViewCell) as! ErrorProductsTableViewCell
         
-        let index = (CurrentPage - 1)  * MaxProductNumberPerPage + indexPath.row
+        let index = (CurrentPage - 1) * MaxProductNumberPerPage + indexPath.row
         
-        cell.NameLabel.text = ErrorProductList[index].name
-        cell.ErrorLabel.text = ErrorProductList[index].errorDescription
-        cell.SKULabel.text = ErrorProductList[index].sku
-        let colorID = ErrorProductList[index].color
-        if (colorID >= 0 && colorID < ColorList.count) {
+        if (index >= 0 && index < ErrorProductList.count) {
             
-            cell.ColorLabel.text = ColorList[colorID].name
-            
-        }
-        
-        let imagePath = ErrorProductList[index].image
-        if (imagePath != "") {
-            
-            let url = URL(string: imagePath)!
-            let webPCoder = SDImageWebPCoder.shared
-            SDImageCodersManager.shared.addCoder(webPCoder)
-            DispatchQueue.main.async {
+            cell.NameLabel.text = ErrorProductList[index].name
+            cell.ErrorLabel.text = ErrorProductList[index].errorDescription
+            cell.SKULabel.text = ErrorProductList[index].sku
+            let colorID = ErrorProductList[index].color
+            if (colorID >= 0 && colorID < ColorList.count) {
                 
-                cell.ProductImageView.sd_setImage(with: url)
+                cell.ColorLabel.text = ColorList[colorID].name
                 
             }
             
+            let imagePath = ErrorProductList[index].image
+            if (imagePath != "") {
+                
+                let url = URL(string: imagePath)!
+                let webPCoder = SDImageWebPCoder.shared
+                SDImageCodersManager.shared.addCoder(webPCoder)
+                DispatchQueue.main.async {
+                    
+                    cell.ProductImageView.sd_setImage(with: url)
+                    
+                }
+                
+            }
+            
+            //Kiem tra hop le
+            ValidArray[index] = CheckValidation_NameProduct(nameLabel: cell.NameLabel, errorLabel: cell.NameErrorLabel) &&
+            CheckValidation_SKU(nameLabel: cell.SKULabel, errorLabel: cell.SKUErrorLabel)
+            
         }
-
+        
         return cell
         
     }
     
     //Chi dinh do cao cho 1 o
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //return UITableView.automaticDimension
-        return 170
+        
+        return UITableView.automaticDimension
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let index = (CurrentPage - 1)  * MaxProductNumberPerPage + indexPath.row
+        SelectedProductIndex = index
         
         ErrorProductsTableView.deselectRow(at: indexPath, animated: true)
         let dest = self.storyboard?.instantiateViewController(identifier: Storyboard.EditProductInfo_StoryboardID) as! EditProductInfo_ViewController
@@ -394,8 +365,23 @@ extension ErrorProductsViewController:UITableViewDelegate,UITableViewDataSource{
         
         //Nap du lieu qua man hinh chinh sua thong tin
         dest.info = ErrorProductList[index]
+        dest.delegate = self
         
         self.present(dest, animated: true, completion: nil)
     
     }
+}
+
+//
+// MARK: - Edit Product Infomation Delegate
+//
+extension ErrorProductsViewController: EditProductInfoDelegate{
+    
+    func UpdateInfo(info: ProductInfomation) {
+        
+        ErrorProductList[SelectedProductIndex] = info
+        ErrorProductsTableView.reloadData()
+        
+    }
+    
 }

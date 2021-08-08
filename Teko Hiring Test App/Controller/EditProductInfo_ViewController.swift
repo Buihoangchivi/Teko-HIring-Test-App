@@ -9,9 +9,14 @@
 import UIKit
 import SDWebImageWebPCoder
 
+//
+// MARK: - Edit Products Infomation View Controller
+//
 class EditProductInfo_ViewController: UIViewController {
     
-    //IBOutlet
+    //
+    // MARK: - Outlets
+    //
     @IBOutlet weak var IDLabel: UILabel!
     @IBOutlet weak var ErrorLabel: UILabel!
     @IBOutlet weak var NameTextField: UITextField!
@@ -23,8 +28,15 @@ class EditProductInfo_ViewController: UIViewController {
     
     @IBOutlet weak var ColorPickerView: UIPickerView!
     
-    var info = ProductInfomation()
+    //
+    // MARK: - Variables And Properties
+    //
+    var info = ProductInfomation()    
+    var delegate: EditProductInfoDelegate?
     
+    //
+    // MARK: - View Controller
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,6 +51,10 @@ class EditProductInfo_ViewController: UIViewController {
     
     @IBAction func act_Save(_ sender: Any) {
         
+        info.name = NameTextField.text!
+        info.sku = SKUTextField.text!
+        info.color = ColorPickerView.selectedRow(inComponent: 0)
+        delegate?.UpdateInfo(info: info)
         self.dismiss(animated: true, completion: nil)
         
     }
@@ -96,17 +112,26 @@ class EditProductInfo_ViewController: UIViewController {
     
 }
 
+//
+// MARK: - Picker View Data Source and Picker View Delegate
+//
 extension EditProductInfo_ViewController : UIPickerViewDataSource, UIPickerViewDelegate {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        
         return 1
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
         return ColorList.count
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
         return String(ColorList[row].name)
+        
     }
 }

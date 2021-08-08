@@ -8,25 +8,36 @@
 
 import UIKit
 
+//
+// MARK: - Error Products Cell
+//
 class ErrorProductsTableViewCell: UITableViewCell {
     
-    //IBOutlet
+    //
+    // MARK: - Outlets
+    //
     @IBOutlet weak var ProductImageView: UIImageView!
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var ErrorLabel: UILabel!
     @IBOutlet weak var SKULabel: UILabel!
     @IBOutlet weak var ColorLabel: UILabel!
     @IBOutlet weak var EditButton: UIButton!
+    @IBOutlet weak var NameErrorLabel: UILabel!
+    @IBOutlet weak var SKUErrorLabel: UILabel!
     
+    //
+    // MARK: - Table View Cell
+    //
     override func awakeFromNib() {
+        
         super.awakeFromNib()
-        // Initialization code
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
+        
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        
     }
 
 }

@@ -16,6 +16,9 @@
 		36D862D626BEC7F000ECAB2B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862D526BEC7F000ECAB2B /* Utilities.swift */; };
 		36D862D826BEC82400ECAB2B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862D726BEC82400ECAB2B /* Constant.swift */; };
 		36D862DA26BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862D926BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift */; };
+		36D862DC26BF970400ECAB2B /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862DB26BF970400ECAB2B /* Delegate.swift */; };
+		36D862DE26BFA12700ECAB2B /* UpdatedProductsPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862DD26BFA12700ECAB2B /* UpdatedProductsPopUpViewController.swift */; };
+		36D862E426BFCB6B00ECAB2B /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D862E326BFCB6B00ECAB2B /* Data.swift */; };
 		F9DED54A6FFC990A5BCC668B /* Pods_Teko_Hiring_Test_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F07FBA0153737645222F9CF /* Pods_Teko_Hiring_Test_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +36,9 @@
 		36D862D526BEC7F000ECAB2B /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		36D862D726BEC82400ECAB2B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		36D862D926BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProductInfo_ViewController.swift; sourceTree = "<group>"; };
+		36D862DB26BF970400ECAB2B /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
+		36D862DD26BFA12700ECAB2B /* UpdatedProductsPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatedProductsPopUpViewController.swift; sourceTree = "<group>"; };
+		36D862E326BFCB6B00ECAB2B /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		4F07FBA0153737645222F9CF /* Pods_Teko_Hiring_Test_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Teko_Hiring_Test_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -78,6 +84,10 @@
 			isa = PBXGroup;
 			children = (
 				36D862C026BE7E8500ECAB2B /* Info.plist */,
+				36D862E226BFCA6C00ECAB2B /* Model */,
+				36D862C826BE824B00ECAB2B /* Delegate */,
+				36D862D426BEC60F00ECAB2B /* Handle */,
+				36D862E126BFBFF100ECAB2B /* Resources */,
 				36D862C726BE821400ECAB2B /* Controller */,
 				36D862C626BE81FA00ECAB2B /* View */,
 			);
@@ -87,7 +97,7 @@
 		36D862C626BE81FA00ECAB2B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				36D862C926BE826200ECAB2B /* Storyboard */,
+				36D862DF26BFBF6200ECAB2B /* Cells */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -95,11 +105,9 @@
 		36D862C726BE821400ECAB2B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				36D862D426BEC60F00ECAB2B /* Handle */,
-				36D862D126BE8D4F00ECAB2B /* Table View Cell */,
-				36D862CC26BE864C00ECAB2B /* View Controller */,
-				36D862C826BE824B00ECAB2B /* Delegate */,
-				36D862BB26BE7E8500ECAB2B /* Assets.xcassets */,
+				36D862CF26BE879000ECAB2B /* ErrorProducts_ViewController.swift */,
+				36D862D926BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift */,
+				36D862DD26BFA12700ECAB2B /* UpdatedProductsPopUpViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -109,33 +117,9 @@
 			children = (
 				36D862B226BE7E8300ECAB2B /* AppDelegate.swift */,
 				36D862B426BE7E8300ECAB2B /* SceneDelegate.swift */,
+				36D862DB26BF970400ECAB2B /* Delegate.swift */,
 			);
 			path = Delegate;
-			sourceTree = "<group>";
-		};
-		36D862C926BE826200ECAB2B /* Storyboard */ = {
-			isa = PBXGroup;
-			children = (
-				36D862B826BE7E8300ECAB2B /* Main.storyboard */,
-			);
-			path = Storyboard;
-			sourceTree = "<group>";
-		};
-		36D862CC26BE864C00ECAB2B /* View Controller */ = {
-			isa = PBXGroup;
-			children = (
-				36D862CF26BE879000ECAB2B /* ErrorProducts_ViewController.swift */,
-				36D862D926BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift */,
-			);
-			path = "View Controller";
-			sourceTree = "<group>";
-		};
-		36D862D126BE8D4F00ECAB2B /* Table View Cell */ = {
-			isa = PBXGroup;
-			children = (
-				36D862D226BE8DB400ECAB2B /* ErrorProducts_TableViewCell.swift */,
-			);
-			path = "Table View Cell";
 			sourceTree = "<group>";
 		};
 		36D862D426BEC60F00ECAB2B /* Handle */ = {
@@ -145,6 +129,31 @@
 				36D862D726BEC82400ECAB2B /* Constant.swift */,
 			);
 			path = Handle;
+			sourceTree = "<group>";
+		};
+		36D862DF26BFBF6200ECAB2B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				36D862D226BE8DB400ECAB2B /* ErrorProducts_TableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		36D862E126BFBFF100ECAB2B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				36D862BB26BE7E8500ECAB2B /* Assets.xcassets */,
+				36D862B826BE7E8300ECAB2B /* Main.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		36D862E226BFCA6C00ECAB2B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				36D862E326BFCB6B00ECAB2B /* Data.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		833BBF9607FAFF57E9E237B2 /* Pods */ = {
@@ -271,10 +280,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				36D862D326BE8DB400ECAB2B /* ErrorProducts_TableViewCell.swift in Sources */,
+				36D862E426BFCB6B00ECAB2B /* Data.swift in Sources */,
 				36D862D026BE879000ECAB2B /* ErrorProducts_ViewController.swift in Sources */,
 				36D862B326BE7E8300ECAB2B /* AppDelegate.swift in Sources */,
 				36D862DA26BF7B7D00ECAB2B /* EditProductInfo_ViewController.swift in Sources */,
+				36D862DC26BF970400ECAB2B /* Delegate.swift in Sources */,
 				36D862D626BEC7F000ECAB2B /* Utilities.swift in Sources */,
+				36D862DE26BFA12700ECAB2B /* UpdatedProductsPopUpViewController.swift in Sources */,
 				36D862B526BE7E8300ECAB2B /* SceneDelegate.swift in Sources */,
 				36D862D826BEC82400ECAB2B /* Constant.swift in Sources */,
 			);
